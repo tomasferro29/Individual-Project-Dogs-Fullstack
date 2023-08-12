@@ -10,11 +10,8 @@ export default function Detail() {
     useEffect(() => {
         dispatch(getDetail(id))
     }, [dispatch, id]) 
-    
     let dog = useSelector((state) => state.detail)  
     if (dog.name && (dog.image || dog.img) && dog.weight && (dog.temperament || dog.temperaments) ) {
-
-    
     return (
         <div>
             { dog ? 

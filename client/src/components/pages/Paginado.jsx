@@ -1,4 +1,18 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+import styled from 'styled-components';
+
+const StyledPaginate = styled.div`
+	display: flex;
+	gap: 10px;
+`;
+
+const StyledPageNumber = styled.button`
+	background-color: #fff;
+	height: 30px;
+	width: 30px;
+	border-radius: 10px;
+	cursor: pointer;
+`;
 
 export default function Paginado({dogsPerPage, allDogs, paginado}) {
 
@@ -8,14 +22,14 @@ export default function Paginado({dogsPerPage, allDogs, paginado}) {
 	}
 
 	return(
-		<nav>
-			<ul>
+		<StyledPaginate>
+			
 				{
 					pageNumbers?.map((number,i) =>( 
-							<button key={i} onClick={() => paginado(number)}>{' '+number+' '}</button>
+						<StyledPageNumber key={i} onClick={() => paginado(number)}>{' '+number+' '}</StyledPageNumber>
 					))
 				}
-			</ul>
-		</nav>
+			
+		</StyledPaginate>
 	)
 }
