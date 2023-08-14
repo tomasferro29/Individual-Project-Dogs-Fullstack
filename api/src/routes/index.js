@@ -8,15 +8,18 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+const API_KEY = 'live_7vsBC78dEVRrDhnhrYAlVxUj1cHT8ZO4LxdE3AKttDBkL4phJwA5DIY1QkRmqkVy'
 
 const getApiInfo = async () => {
-    const apiUrl = await axios.get('https://api.thedogapi.com/v1/breeds')
-    const apiInfo = await apiUrl.data.map(el => {
+    const apiUrl = await axios.get('https://api.thedogapi.com/v1/breeds?api_key='+ API_KEY)
+    const apiInfo = await apiUrl.data.map(async (el) => {
         let arrayTemperaments = typeof el.temperament === 'string' ? el.temperament.split(', ') : el.temperament
+        // const dogImage = await axios.get('https://api.thedogapi.com/v1/images/' + el.reference_image_id)
         return {
             id: el.id,
             name: el.name,
             img: el.image.url,
+            // img: dogImage,
             height: el.height.metric,
             weight: el.weight.metric,
             life_span: el.life_span,
@@ -39,11 +42,12 @@ const getDbInfo = async () => {
 };
 
 const getAllInfo = async () => {
-    const apiInfo = await getApiInfo()
+    // const apiInfo = await getApiInfo()
     const dbInfo = await getDbInfo()
-    const allInfo = apiInfo.concat(dbInfo)
-    return allInfo 
+    // const allInfo = apiInfo.concat(dbInfo)
+    // return allInfo 
     // return apiInfo
+    return dbInfo
 };
 
 const getTemperaments = async () => {

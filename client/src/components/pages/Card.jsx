@@ -21,7 +21,19 @@ const StyledName = styled.a`
     margin: 10px 0 10px 25px;
 `;
 
+const DogImage = styled.img`
+${props => props.showTemperaments ? `
+        width:50px;
+    height: 50px;
+    ` : `
+    width:200px;
+    height: 200px;
+    `}
+    
+`;
+
 const ImageWrapper = styled.div`
+
     display: flex;
     justify-content: center;
     padding-top: 27px;
@@ -51,7 +63,7 @@ const TempsWrapper = styled.div`
 const TempTitle = styled.div`
     display: flex;
     justify-content: space-around;
-    margin: 5px 10px;
+    margin: 10px 10px 20px 10px;
     align-items: center;
 `;
 
@@ -80,8 +92,8 @@ export default function Card({name, img, temperament, temperaments, weight, id})
 
     return (
         <StyledCard>
-            <ImageWrapper>
-                <a href={'/home/'+ id}><img src={imgUrl} alt='image not found' width='200px' height='200px'/></a>
+            <ImageWrapper >
+                <a href={'/home/'+ id}><DogImage src={imgUrl} alt='image not found' showTemperaments={showTemperaments} /></a>
                 {/* <Link to={'/home/'+ id}><img src={imgUrl} alt='image not found' width='200px' height='200px'/></Link> */}
             </ImageWrapper>
             <StyledName href={'/home/'+ id}>{dogName}</StyledName>
