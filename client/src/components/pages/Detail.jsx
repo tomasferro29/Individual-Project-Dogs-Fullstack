@@ -11,7 +11,7 @@ const Background = styled.div`
 	padding: 50px 0;
 	display: flex;
 	justify-content: center;
-    height: 100svb;
+    height: 100vh;
 `;
 
 const StyledDetail = styled.div`

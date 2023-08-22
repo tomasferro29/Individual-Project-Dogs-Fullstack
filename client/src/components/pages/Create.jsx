@@ -22,7 +22,7 @@ const Background = styled.div`
 	padding: 50px 0;
 	display: flex;
 	justify-content: center;
-
+    height: 100vh;
 `;
 
 const Wrapper = styled.div`

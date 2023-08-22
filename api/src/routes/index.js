@@ -11,15 +11,13 @@ const router = Router();
 const API_KEY = 'live_7vsBC78dEVRrDhnhrYAlVxUj1cHT8ZO4LxdE3AKttDBkL4phJwA5DIY1QkRmqkVy'
 
 const getApiInfo = async () => {
-    const apiUrl = await axios.get('https://api.thedogapi.com/v1/breeds?api_key='+ API_KEY)
-    const apiInfo = await apiUrl.data.map(async (el) => {
+    const apiUrl = await axios.get('https://api.thedogapi.com/v1/breeds?api_key=' + API_KEY)
+    const apiInfo = await apiUrl.data.map( (el) => {
         let arrayTemperaments = typeof el.temperament === 'string' ? el.temperament.split(', ') : el.temperament
-        // const dogImage = await axios.get('https://api.thedogapi.com/v1/images/' + el.reference_image_id)
         return {
             id: el.id,
             name: el.name,
             img: el.image.url,
-            // img: dogImage,
             height: el.height.metric,
             weight: el.weight.metric,
             life_span: el.life_span,
@@ -41,13 +39,29 @@ const getDbInfo = async () => {
     })
 };
 
+const deleteDbDog = async (id) => {
+    if ( await Dog.findOne({
+        where: {
+            id
+        }
+    })) {
+        return await Dog.destroy({
+            where: {
+                id
+            }
+        })
+    } else {
+        console.log('No se encontro ese dog')
+    }
+}
+
 const getAllInfo = async () => {
-    // const apiInfo = await getApiInfo()
+    const apiInfo = await getApiInfo()
     const dbInfo = await getDbInfo()
-    // const allInfo = apiInfo.concat(dbInfo)
-    // return allInfo 
+    const allInfo = apiInfo.concat(dbInfo)
+    return allInfo 
     // return apiInfo
-    return dbInfo
+    // return dbInfo
 };
 
 const getTemperaments = async () => {
@@ -112,5 +126,11 @@ router.get('/dogs/:id', async (req, res) => {
         res.status(400).send('No hubo chance bro')
     }
 });
+
+router.delete('/dogs/:id', async (req, res) => {
+    const id = req.params.id 
+    deleteDbDog(id)
+    res.send(`el dog con id ${id} ha sido eliminado`)
+})
 
 module.exports = router;

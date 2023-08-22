@@ -19,6 +19,8 @@ const Background = styled.div`
 	display: flex;
 	justify-content: center;
 	/* height: 350svb; */
+    min-height: 100vh;
+
 	
 `;
 
