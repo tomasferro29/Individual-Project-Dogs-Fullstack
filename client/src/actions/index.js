@@ -83,3 +83,14 @@ export function getDetail(id) {
 
     }
 }
+
+export function deleteDog(id) {
+    return async function(dispatch) {
+        try {
+            let response = await axios.delete('http://localhost:3001/dogs/' + id)
+            return response
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}

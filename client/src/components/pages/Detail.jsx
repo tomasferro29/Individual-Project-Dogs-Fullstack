@@ -1,5 +1,5 @@
-import { useEffect } from "react"
-import { getDetail } from "../../actions"
+import { useEffect, useState } from "react"
+import { getDetail, deleteDog } from "../../actions"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom"
 import styled from 'styled-components';
@@ -58,6 +58,73 @@ const GoBackButton = styled.button`
     font-size: 15px;
 `;
 
+const DeleteButton = styled.button`
+    background-color: #ef233c;
+    border: 0;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 10;
+    font-size: 15px;
+    margin-left: 50px;
+`;
+
+const ConfirmationButtons = styled.div`
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    align-items: center;
+    height: 50%;
+    margin: 100px;
+`;
+
+const ConfirmationWrapper = styled.div`
+    margin: 50px;
+`;
+
+const YesButton = styled.button`
+    background-color: #ef233c;
+    border: 0;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 10;
+    font-size: 15px;
+    margin-left: 50px;
+    
+`;
+
+const NoButton = styled.button`
+    background-color: #5542f6;
+    border: 0;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 10;
+    font-size: 15px;
+    margin-left: 50px;
+    
+`;
+
+const StyledYesText = styled.a`
+    text-decoration: none;
+    color: #fff;
+`;
 export default function Detail() {
 
     const {id} = useParams()
@@ -66,6 +133,30 @@ export default function Detail() {
         dispatch(getDetail(id))
     }, [dispatch, id]) 
     let dog = useSelector((state) => state.detail)  
+    const [toDelete, setToDelete] = useState(false)
+
+    function deleteDogById (id) {
+        dispatch(deleteDog(id))
+    }
+
+
+    if ( toDelete === true ) {
+        return (
+            <Background>
+            <Center>
+                <ConfirmationWrapper>
+                    <h1>Are you sure you want to delete this dog?</h1>
+                    <ConfirmationButtons>
+                        <YesButton onClick={() => deleteDogById(dog.id)}>
+                            <StyledYesText href="/home">YES</StyledYesText>
+                        </YesButton>
+                        <NoButton onClick={() => setToDelete(false)}>NO</NoButton>
+                    </ConfirmationButtons>
+                </ConfirmationWrapper>
+            </Center>
+            </Background>
+        )
+    } 
     if (dog.name && (dog.image || dog.img) && dog.weight && (dog.temperament || dog.temperaments) ) {
     return (
         <Background>
@@ -74,6 +165,11 @@ export default function Detail() {
         <StyledDetail>
             <NameWrapper>
                 <Link to='/home' ><GoBackButton>Back to Home</GoBackButton></Link>
+                {
+                    dog.image ? 
+                    <DeleteButton onClick={() => setToDelete(true)} >Delete</DeleteButton> :
+                    null
+                }
                 <StyledName>{dog.name}</StyledName>
             </NameWrapper>
             <InfoWrapper>
