@@ -22,7 +22,7 @@ const { conn } = require('./src/db.js');
 const cors = require('cors')
 
 const whiteList = ['http://localhost:3000/create']
-// {origin:[]}
+
 server.use(cors())
 
 // Syncing all the models at once.

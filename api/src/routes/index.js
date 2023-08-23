@@ -55,6 +55,7 @@ const deleteDbDog = async (id) => {
     }
 }
 
+
 const getAllInfo = async () => {
     const apiInfo = await getApiInfo()
     const dbInfo = await getDbInfo()
@@ -127,10 +128,37 @@ router.get('/dogs/:id', async (req, res) => {
     }
 });
 
-router.delete('/dogs/:id', async (req, res) => {
+router.delete('/dogs/:id', (req, res) => {
     const id = req.params.id 
     deleteDbDog(id)
     res.send(`el dog con id ${id} ha sido eliminado`)
 })
+
+// router.put('/dogs/:id', async (req, res) => {
+//     const id = req.params.id;
+  
+//     const data = req.body;
+  
+//     const dog = await Dog.findOne({
+//         where: {
+//             id
+//         }
+//     });
+  
+//     if (dog) {
+//       dog.name = data.name;
+//       dog.weight = data.weight;
+//       dog.height = data.height;
+//       dog.life_span = data.life_span;
+//       dog.image = data.image;
+//       dog.temperament = data.temperament
+      
+//       Dog.save(dog);
+  
+//       res.json(dog);
+//     } else {
+//       res.status(404).send('Dog not found');
+//     }
+//   });
 
 module.exports = router;
